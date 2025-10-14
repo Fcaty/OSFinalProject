@@ -1,0 +1,68 @@
+import java.util.Scanner;
+
+public class Process {
+    static Scanner myScan = new Scanner(System.in);
+
+    //Method to input memory blocks
+    public static int[] inputMemBlocks(int[] memoryBlocks) {
+        for(int i = 0; i < memoryBlocks.length - 1; i++){
+            System.out.print("Size of Memory Block M"+(i+1)+": ");
+            memoryBlocks[i] = myScan.nextInt();
+        }
+        return memoryBlocks;
+    }
+
+    //Method to input job blocks
+    public static int[] inputJobBlocks(int[] jobBlocks) {
+        for(int i = 0; i < jobBlocks.length; i++){
+            System.out.print("Size of Job Block J"+(i+1)+": ");
+            jobBlocks[i] = myScan.nextInt();
+        }
+        return jobBlocks;
+    }
+
+    //Method to evaluate and display memory allocation process
+    public static void firstFitAllocation(int[] jobBlocks, int[] memoryBlocks) {
+        int jobMemory[] = new int[memoryBlocks.length - 1];
+        boolean isFull[] = new boolean[memoryBlocks.length];
+
+        for (int j = 0; j < jobBlocks.length; j++) {
+            for (int m = 0; m < memoryBlocks.length - 1; m++) {
+                if(!isFull[m] && jobBlocks[j] <= memoryBlocks[m]){
+                    jobMemory[j] = m;
+                    isFull[m] = true;
+                    break;
+                } else if (isFull[m]){
+                    continue;
+                } else {
+                    jobMemory[j] = -1;
+                }
+            }
+        }
+        Output.displayJointTable(jobMemory, memoryBlocks, jobBlocks);
+    }
+
+    public static void bestFitAllocation(int[] jobBlocks, int[] memoryBlocks) {
+        int jobMemory[] = new int[memoryBlocks.length -1 ];
+        boolean isFull[] = new boolean[memoryBlocks.length];
+
+        int smallestDiff = 0;
+        int currentIndex = -1;
+
+        for(int j = 0; j < jobBlocks.length; j++){
+            for(int m = 0; m < memoryBlocks.length - 1; m++){
+                if(currentIndex == -1 && !isFull[m]){
+                    smallestDiff = memoryBlocks[m] - jobBlocks[j];
+                    currentIndex = m;
+                } else if ((smallestDiff > memoryBlocks[m] - jobBlocks[j] && memoryBlocks[m] - jobBlocks[j] >= 0) && (!isFull[m])) {
+                    smallestDiff = memoryBlocks[m] - jobBlocks[j];
+                    currentIndex = m;
+                }
+            }
+            jobMemory[j] = currentIndex;
+            isFull[currentIndex] = true;
+            currentIndex = -1;
+        }
+        Output.displayJointTable(jobMemory, memoryBlocks, jobBlocks);
+    }
+}
