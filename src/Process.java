@@ -23,7 +23,7 @@ public class Process {
 
     //Method to evaluate and display memory allocation process
     public static void firstFitAllocation(int[] jobBlocks, int[] memoryBlocks) {
-        int jobMemory[] = new int[memoryBlocks.length - 1];
+        int jobMemory[] = new int[(jobBlocks.length >= memoryBlocks.length) ? jobBlocks.length : memoryBlocks.length - 1];
         boolean isFull[] = new boolean[memoryBlocks.length];
 
         for (int j = 0; j < jobBlocks.length; j++) {
@@ -43,7 +43,7 @@ public class Process {
     }
 
     public static void bestFitAllocation(int[] jobBlocks, int[] memoryBlocks) {
-        int jobMemory[] = new int[memoryBlocks.length -1 ];
+        int jobMemory[] = new int[(jobBlocks.length >= memoryBlocks.length) ? jobBlocks.length : memoryBlocks.length - 1];
         boolean isFull[] = new boolean[memoryBlocks.length];
 
         int smallestDiff = 0;
@@ -53,15 +53,21 @@ public class Process {
             for(int m = 0; m < memoryBlocks.length - 1; m++){
                 if(currentIndex == -1 && !isFull[m]){
                     smallestDiff = memoryBlocks[m] - jobBlocks[j];
+                    if(smallestDiff < 0) continue;
                     currentIndex = m;
                 } else if ((smallestDiff > memoryBlocks[m] - jobBlocks[j] && memoryBlocks[m] - jobBlocks[j] >= 0) && (!isFull[m])) {
                     smallestDiff = memoryBlocks[m] - jobBlocks[j];
                     currentIndex = m;
                 }
             }
+            if(currentIndex == -1){
+                jobMemory[j] = -1;
+                continue;
+            }
             jobMemory[j] = currentIndex;
             isFull[currentIndex] = true;
             currentIndex = -1;
+
         }
         Output.displayJointTable(jobMemory, memoryBlocks, jobBlocks);
     }

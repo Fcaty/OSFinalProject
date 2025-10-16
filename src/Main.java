@@ -20,10 +20,10 @@ public class Main {
 
         System.out.println("==============================================================================");
         System.out.print("How many jobs are we working with?: ");
-        jobAmt = myScan.nextInt();
+        jobAmt = myScan.nextInt(); //input amount of job blocks
         int jobBlockSize[] = new int[jobAmt];
-        jobBlockSize = Process.inputJobBlocks(jobBlockSize);
-        Output.displayJobTable(jobBlockSize);
+        jobBlockSize = Process.inputJobBlocks(jobBlockSize); //input job block sizes
+        Output.displayJobTable(jobBlockSize); //display job blocks
 
         System.out.println("==============================================================================");
         System.out.println("[1] First Fit Memory Allocation");

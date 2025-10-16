@@ -33,7 +33,7 @@ public class Output {
         boolean hasPrinted[] = new boolean[memoryBlocks.length - 1];
         int storedIndex[] = new int[memoryBlocks.length - 1];
 
-        for(int jm = 0; jm < jobMemory.length; jm++){
+        for(int jm = 0; jm < jobBlocks.length; jm++){
             if(jobMemory[jm] == -1){
                 System.out.println("Job "+(jm + 1)+" is waiting...\n\n\n");
                 continue;
