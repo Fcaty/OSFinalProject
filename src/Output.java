@@ -32,13 +32,21 @@ public class Output {
     public static void displayJointTable(int[] jobMemory, int[] memoryBlocks, int[] jobBlocks){
         boolean hasPrinted[] = new boolean[memoryBlocks.length - 1];
         int storedIndex[] = new int[memoryBlocks.length - 1];
+        int totalMemory = 0;
+        int totalJob = 0;
+
+        for(int i = 0; i < memoryBlocks.length; i++){
+            totalMemory += memoryBlocks[i];
+        }
 
         for(int jm = 0; jm < jobBlocks.length; jm++){
+            System.out.println("+--------+--------------+-----+-----------+--------+-------------------------+");
+            System.out.println("|                              STEP "+(jm+1)+"                                        |");
+            System.out.println("+--------+--------------+-----+-----------+--------+-------------------------+");
             if(jobMemory[jm] == -1){
                 System.out.println("Job "+(jm + 1)+" is waiting...\n\n\n");
                 continue;
             }
-            System.out.println("+--------+--------------+-----+-----------+--------+-------------------------+");
             System.out.printf ("|%-8s|%-14s|%-5s|%-11s|%-8s|%-25s|\n"," Memory"," Memory block", " Job", " Job block"," Status"," Internal");
             System.out.printf ("|%-8s|%-14s|%-5s|%-11s|%-8s|%-25s|\n"," Loc"," size", " Loc", " size"," "," Fragmentation");
             System.out.println("+--------+--------------+-----+-----------+--------+-------------------------+");
@@ -47,12 +55,15 @@ public class Output {
                     System.out.printf ("|%-8s|%-14s|%-5s|%-11s|%-8s|%-25s|\n"," M"+(m+1)+" ", memoryBlocks[m]+"K", "J"+(jm + 1), jobBlocks[jm]," BUSY ", memoryBlocks[m] - jobBlocks[jm]);
                     hasPrinted[m] = true;
                     storedIndex[m] = jm;
+                    totalJob += jobBlocks[jm];
                 } else if (hasPrinted[m]){
                     System.out.printf ("|%-8s|%-14s|%-5s|%-11s|%-8s|%-25s|\n"," M"+(m+1)+" ", memoryBlocks[m]+"K", "J"+(storedIndex[m] + 1), jobBlocks[storedIndex[m]]," BUSY ", memoryBlocks[m] - jobBlocks[storedIndex[m]]);
                 } else {
                     System.out.printf ("|%-8s|%-14s|%-5s|%-11s|%-8s|%-25s|\n"," M"+(m+1)+" ", memoryBlocks[m]+"K", " ", " "," FREE ", " ");
                 }
             }
+            System.out.println("+--------+--------------+-----+-----------+--------+-------------------------+");
+            System.out.printf("|%-23s|%-17s|%-34s|\n", " Total Available: "+totalMemory+"K ", " Total Used: "+totalJob+"K ", " ");
             System.out.println("+--------+--------------+-----+-----------+--------+-------------------------+");
         }
     }

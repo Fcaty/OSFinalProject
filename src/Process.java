@@ -6,8 +6,10 @@ public class Process {
     //Method to input memory blocks
     public static int[] inputMemBlocks(int[] memoryBlocks) {
         for(int i = 0; i < memoryBlocks.length - 1; i++){
-            System.out.print("Size of Memory Block M"+(i+1)+": ");
-            memoryBlocks[i] = myScan.nextInt();
+            do{
+                System.out.print("Size of Memory Block M"+(i+1)+": ");
+                memoryBlocks[i] = myScan.nextInt();
+            }while(memoryBlocks[i] <= 0);
         }
         return memoryBlocks;
     }
@@ -15,8 +17,10 @@ public class Process {
     //Method to input job blocks
     public static int[] inputJobBlocks(int[] jobBlocks) {
         for(int i = 0; i < jobBlocks.length; i++){
-            System.out.print("Size of Job Block J"+(i+1)+": ");
-            jobBlocks[i] = myScan.nextInt();
+            do{
+                System.out.print("Size of Job Block J"+(i+1)+": ");
+                jobBlocks[i] = myScan.nextInt();
+            }while(jobBlocks[i] <= 0);
         }
         return jobBlocks;
     }
