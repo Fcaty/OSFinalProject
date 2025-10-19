@@ -63,9 +63,31 @@ public class Output {
                 }
             }
             System.out.println("+--------+--------------+-----+-----------+--------+-------------------------+");
-            System.out.printf("|%-23s|%-17s|%-34s|\n", " Total Available: "+totalMemory+"K ", " Total Used: "+totalJob+"K ", " ");
+            System.out.printf("|%-23s|%-17s|%-34s|\n", " TTL Available: "+totalMemory+"K ", " TTL Used: "+totalJob+"K ", " ");
             System.out.println("+--------+--------------+-----+-----------+--------+-------------------------+");
         }
+        displayFinalAnswer(jobBlocks, memoryBlocks, storedIndex, totalMemory, totalJob, hasPrinted);
+    }
+
+    public static void displayFinalAnswer(int jobBlocks[], int memoryBlocks[], int storedIndex[], int totalMemory, int totalJob, boolean[] hasPrinted){
+        System.out.println("\n\n\n");
+        System.out.println("+--------+--------------+-----+-----------+--------+-------------------------+");
+        System.out.println("|                              FINAL ANSWER                                  |");
+        System.out.println("+--------+--------------+-----+-----------+--------+-------------------------+");
+        System.out.println("+--------+--------------+-----+-----------+--------+-------------------------+");
+        System.out.printf ("|%-8s|%-14s|%-5s|%-11s|%-8s|%-25s|\n"," Memory"," Memory block", " Job", " Job block"," Status"," Internal");
+        System.out.printf ("|%-8s|%-14s|%-5s|%-11s|%-8s|%-25s|\n"," Loc"," size", " Loc", " size"," "," Fragmentation");
+        System.out.println("+--------+--------------+-----+-----------+--------+-------------------------+");
+        for(int m = 0; m < memoryBlocks.length - 1; m++){
+            if(hasPrinted[m]) {
+                System.out.printf("|%-8s|%-14s|%-5s|%-11s|%-8s|%-25s|\n", " M" + (m + 1) + " ", memoryBlocks[m] + "K", "J" + (storedIndex[m] + 1), jobBlocks[storedIndex[m]], " BUSY ", memoryBlocks[m] - jobBlocks[storedIndex[m]]);
+            } else {
+                System.out.printf ("|%-8s|%-14s|%-5s|%-11s|%-8s|%-25s|\n"," M"+(m+1)+" ", memoryBlocks[m]+"K", " ", " "," FREE ", " ");
+            }
+        }
+        System.out.println("+--------+--------------+-----+-----------+--------+-------------------------+");
+        System.out.printf("|%-23s|%-17s|%-34s|\n", " TTL Available: "+totalMemory+"K ", " TTL Used: "+totalJob+"K ", " ");
+        System.out.println("+--------+--------------+-----+-----------+--------+-------------------------+");
     }
 }
 

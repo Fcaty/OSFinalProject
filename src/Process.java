@@ -31,15 +31,14 @@ public class Process {
         boolean isFull[] = new boolean[memoryBlocks.length];
 
         for (int j = 0; j < jobBlocks.length; j++) {
+            jobMemory[j] = -1;
             for (int m = 0; m < memoryBlocks.length - 1; m++) {
-                if(!isFull[m] && jobBlocks[j] <= memoryBlocks[m]){
+                if (!isFull[m] && jobBlocks[j] <= memoryBlocks[m]) {
                     jobMemory[j] = m;
                     isFull[m] = true;
                     break;
-                } else if (isFull[m]){
+                } else if (isFull[m]) {
                     continue;
-                } else {
-                    jobMemory[j] = -1;
                 }
             }
         }
